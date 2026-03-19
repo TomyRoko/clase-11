@@ -17,7 +17,7 @@
 // dotenv.config();
 
 import { config } from "dotenv";
-config();
+config({ path: ".env" });
 
 import jwt from "jsonwebtoken";
 
@@ -28,7 +28,7 @@ import jwt from "jsonwebtoken";
 // console.log(token);
 
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmM0NTllMTU4ZmMzYThkNzBkMjNjYiIsImVtYWlsIjoidGVzdEBleGFtcGxlNC5jb20iLCJpYXQiOjE3NzM5NTAzNTIsImV4cCI6MTc3Mzk1Mzk1Mn0.udYx3VD7a2Wg5GIJ0Ba2XheDUYAsI5C5D2PB6S055Yo"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmM0NTllMTU4ZmMzYThkNzBkMjNjYiIsImVtYWlsIjoidGVzdEBleGFtcGxlNC5jb20iLCJpYXQiOjE3NzM5NTA3ODEsImV4cCI6MTc3Mzk1NDM4MX0.z5Qlbu-_1atHYuO4_Ggtucq6-RyRxDJWCVDyACIjh7w"
 
 try {
     const isVerify = jwt.verify(token, process.env.JWT_SECRET);
