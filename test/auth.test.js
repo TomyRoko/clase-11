@@ -17,7 +17,7 @@ describe("Auth User", function () {
   });
   it("Deve registrar un nuevo usuario", async function () {
     const res = await request(app).post("/auth/register").send({
-      email: "test@example7.com",
+      email: "new.test@example7.com",
       password: "1782345",
     });
 
@@ -33,4 +33,24 @@ describe("Auth User", function () {
     expect(res.status).to.equal(200);
     expect(res.body).to.have.property("token");
   });
+  it("Deveria recibir un 401 si no envia token al acceder al perfil", async function () {
+    const res = await request(app).get("/auth/profile");
+
+    expect(res.status).to.equal(401);
+  });
+
+  it("deberia retornar el profile con el token valido", async function () {
+    const login = await request(app).post("/auth/login").send({
+      email: "test@example7.com",
+      password: "1782345",
+    });
+    const token = login.body.token;
+    const res = await request(app)
+      .get("/auth/profile")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).to.equal(200);
+    
+  });
+
 });

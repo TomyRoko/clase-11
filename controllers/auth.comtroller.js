@@ -13,21 +13,34 @@ const createToken = (user) => {
   return tokern;
 };
 
+export const profile = async (req, res) => {
+try {
+    const user = await User.findById(req.user.id).select("-password");
+
+  res.json({
+    message: "Perfil del usuario",
+    user: user,
+  });
+} catch (error) {
+  res.status(500).json({ error: "Error interno del servidor" });
+}
+};
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ error: "Credenciales inválidas" });
-  }
-  const ismatch = await bcrypt.compare(password, user.password);
-  if (!ismatch) {
-    return res.status(400).json({ mensaje: "Credenciales inválidas" });
-  }
-  const token = createToken(user);
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "Credenciales inválidas" });
+    }
+    const ismatch = await bcrypt.compare(password, user.password);
+    if (!ismatch) {
+      return res.status(400).json({ mensaje: "Credenciales inválidas" });
+    }
+    const token = createToken(user);
 
-  res.json({ token });
+    res.json({ token });
   } catch (error) {
     res.status(500).json({ error: "Error interno del servidor" });
   }

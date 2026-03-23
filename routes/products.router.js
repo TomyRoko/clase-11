@@ -11,8 +11,9 @@ import {
   getProductsByCategory,
 } from "../controllers/products.controller.js";
 
+
 // CRUD: create, read, update, delete
-router.post("/", createProduct);
+router.post("/", authmideware, createProduct);
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 router.put("/:id", updateProduct);

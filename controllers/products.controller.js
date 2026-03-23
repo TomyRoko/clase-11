@@ -32,6 +32,8 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
+    return res.json(req.user);
+
     const category = await Category.findById(req.body.category);
 
     if (!category) {
@@ -123,4 +125,3 @@ export const getProductsByCategory = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
