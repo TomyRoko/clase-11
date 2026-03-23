@@ -11,9 +11,10 @@ import {
   getProductsByCategory,
 } from "../controllers/products.controller.js";
 
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 // CRUD: create, read, update, delete
-router.post("/", authmideware, createProduct);
+router.post("/", authMiddleware, createProduct);
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 router.put("/:id", updateProduct);

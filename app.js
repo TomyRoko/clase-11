@@ -14,9 +14,10 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/products", authMiddleware, productsRouter);
+app.use("/products", productsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/auth", authRouter);
 app.use(pingRouter);
 
 export default app;
+    
