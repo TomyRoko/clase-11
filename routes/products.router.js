@@ -9,6 +9,7 @@ import {
   updateProduct,
   deleteProduct,
   getProductsByCategory,
+  getProductsByOwner,
 } from "../controllers/products.controller.js";
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
@@ -17,8 +18,10 @@ import { authMiddleware } from "../middlewares/auth.middleware.js";
 router.post("/", authMiddleware, createProduct);
 router.get("/", getProducts);
 router.get("/:id", getProductById);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.put("/:id", authMiddleware, updateProduct);
+router.delete("/:id", authMiddleware, deleteProduct);
+
+router.get("/my-products", authMiddleware, getProductsByOwner);
 
 // Extra
 router.get("/category/:id", getProductsByCategory);

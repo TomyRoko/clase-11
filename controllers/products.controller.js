@@ -34,7 +34,7 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    
+
     const category = await Category.findById(req.body.category);
 
     if (!category) {
@@ -72,6 +72,16 @@ export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    if (product.owner.toString() !== req.user.id) {
+      return res.status(403).json({ error: "Prohibido" });
+    }
+
     const category = await Category.findById(req.body.category);
 
     if (!category) {
@@ -105,6 +115,16 @@ export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    if (product.owner.toString() !== req.user.id) {
+      return res.status(403).json({ error: "Prohibido" });
+    } 
+
     const productDelete = await Product.findByIdAndDelete(id);
 
     if (!productDelete) {
@@ -136,3 +156,15 @@ export const getProductsByCategory = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const getProductsByOwner = async (req, res) => {
+  try {
+    const products = await Product.find({ owner: req.user.id }).populate(
+      "category",
+    );
+
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
