@@ -42,17 +42,17 @@ export const createProduct = async (req, res) => {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    const body = { ...req.body, owner: req.user.id };
+    // const body = { ...req.body, owner: req.user.id };
 
-    // const data = {
-    //   name: req.body.name,
-    //   price: req.body.price,
-    //   stock: req.body.stock,
-    //   category: req.body.category,
-    //   owner: req.user.id,
-    // };
+    const data = {
+      name: req.body.name,
+      price: req.body.price,
+      stock: req.body.stock,
+      category: req.body.category,
+      owner: req.user.id,
+    };
 
-    const product = new Product(body);
+    const product = new Product(data);
     await product.save();
 
     res.status(201).json(product);
