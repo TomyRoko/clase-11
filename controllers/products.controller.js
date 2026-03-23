@@ -4,8 +4,8 @@ import Category from "../models/Category.js";
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find()
-      .populate("category", "name")
-      .populate("owner", "username");
+      .populate("category")
+      .populate("owner");
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
@@ -34,8 +34,7 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    return res.json(req.user);
-
+    
     const category = await Category.findById(req.body.category);
 
     if (!category) {
